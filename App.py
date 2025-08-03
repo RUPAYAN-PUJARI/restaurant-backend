@@ -2,9 +2,10 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from firebase_config import db
 from google.cloud import firestore
+import os
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, origins=['http://127.0.0.1:5173', 'https://restaurant-frontend-8nhe.onrender.com'],supports_credentials=True)
 
 @app.route('/api/orders', methods=['POST'])
 def add_order():
@@ -160,4 +161,5 @@ def add_or_update_reservation():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000)) 
+    app.run(host="0.0.0.0", port=port)
